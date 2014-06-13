@@ -172,6 +172,7 @@ import com.android.mms.util.MultiSensorManager;
 import com.android.mms.util.DraftCache;
 import com.android.mms.util.PhoneNumberFormatter;
 import com.android.mms.util.SendingProgressTokenManager;
+import com.android.mms.util.SmileyParser;
 import com.android.mms.util.UnicodeFilter;
 import com.android.mms.util.SmileyParser;
 import com.android.mms.widget.MmsWidgetProvider;
@@ -363,6 +364,8 @@ public class ComposeMessageActivity extends Activity
     private GestureLibrary mLibrary;
     private SimpleCursorAdapter mTemplatesCursorAdapter;
     private double mGestureSensitivity;
+
+    private boolean mEnableEmoticons;
 
     private int mInputMethod;
 
@@ -2068,6 +2071,7 @@ public class ComposeMessageActivity extends Activity
                 .getDefaultSharedPreferences((Context) ComposeMessageActivity.this);
         mGestureSensitivity = prefs
                 .getInt(MessagingPreferenceActivity.GESTURE_SENSITIVITY_VALUE, 3);
+        mEnableEmoticons = prefs.getBoolean(MessagingPreferenceActivity.ENABLE_EMOTICONS, true);
         boolean showGesture = prefs.getBoolean(MessagingPreferenceActivity.SHOW_GESTURE, false);
         int unicodeStripping = prefs.getInt(MessagingPreferenceActivity.UNICODE_STRIPPING_VALUE,
                 MessagingPreferenceActivity.UNICODE_STRIPPING_LEAVE_INTACT);
@@ -2943,7 +2947,7 @@ public class ComposeMessageActivity extends Activity
             menu.add(0, MENU_SEND, 0, R.string.send).setIcon(android.R.drawable.ic_menu_send);
         }
 
-        if (!mWorkingMessage.hasSlideshow() && mIsSmsEnabled) {
+        if (!mWorkingMessage.hasSlideshow() && mIsSmsEnabled && mEnableEmoticons) {
             menu.add(0, MENU_INSERT_SMILEY, 0, R.string.menu_insert_smiley).setIcon(
                     R.drawable.ic_menu_emoticons);
         }

@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2014 The CyanogenMod Project
  * Copyright (C) 2008 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,16 +30,13 @@ import com.android.internal.widget.Smileys;
 
 /**
  * This is a series of unit tests for the SmileyParser class.
- * 
- * This is just unit tests of the SmileyParser - the activity is not instantiated
+ * This is just unit tests of the SmileyParser - the activity is not instantiated.
  */
 @SmallTest
 public class SmileyParserUnitTests extends AndroidTestCase {
-
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        
         SmileyParser.init(getContext());
     }
 
@@ -48,21 +46,19 @@ public class SmileyParserUnitTests extends AndroidTestCase {
     public void testSmileyParser() {
         SmileyParser parser = SmileyParser.getInstance();
         SpannableStringBuilder buf = new SpannableStringBuilder();
-        
-        // Put a string that looks kind of like a smiley in between two valid smileys.
+
+        // Put a string that looks kind of like a smiley in between two valid smileys
         buf.append(parser.addSmileySpans(":-):-:-("));
 
         ImageSpan[] spans = buf.getSpans(0, buf.length(), ImageSpan.class);
 
-        assertTrue("Smiley (happy) bitmaps aren't equal",
-                compareImageSpans(new ImageSpan(mContext,
-                        Smileys.getSmileyResource(Smileys.HAPPY)), spans[0]));
+        assertTrue("Smiley (happy) bitmaps aren't equal", compareImageSpans(new ImageSpan(mContext,
+                Smileys.getSmileyResource(Smileys.HAPPY)), spans[0]));
 
-        assertTrue("Smiley (sad) bitmaps aren't equal",
-                compareImageSpans(new ImageSpan(mContext,
-                        Smileys.getSmileyResource(Smileys.SAD)), spans[1]));
+        assertTrue("Smiley (sad) bitmaps aren't equal", compareImageSpans(new ImageSpan(mContext,
+                Smileys.getSmileyResource(Smileys.SAD)), spans[1]));
     }
-    
+
     private boolean compareImageSpans(ImageSpan span1, ImageSpan span2) {
         BitmapDrawable bitmapDrawable1 = (BitmapDrawable)span1.getDrawable();
         BitmapDrawable bitmapDrawable2 = (BitmapDrawable)span2.getDrawable();
@@ -74,11 +70,13 @@ public class SmileyParserUnitTests extends AndroidTestCase {
         if (rowBytes1 != rowBytes2) {
             return false;
         }
+
         int height1 = bitmap1.getHeight();
         int height2 = bitmap2.getHeight();
         if (height1 != height2) {
             return false;
         }
+
         int size = height1 * rowBytes1;
         int[] intArray1 = new int[size];
         int[] intArray2 = new int[size];
@@ -87,7 +85,7 @@ public class SmileyParserUnitTests extends AndroidTestCase {
 
         bitmap1.copyPixelsToBuffer(intBuf1);
         bitmap2.copyPixelsToBuffer(intBuf2);
-        
+
         for (int i = 0; i < size; i++) {
             if (intArray1[i] != intArray2[i]) {
                 return false;
@@ -95,5 +93,4 @@ public class SmileyParserUnitTests extends AndroidTestCase {
         }
         return true;
     }
-
 }

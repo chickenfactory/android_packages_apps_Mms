@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2014 The CyanogenMod Project
  * Copyright (C) 2009 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,11 +22,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 
 import com.android.mms.R;
+import com.android.mms.ui.MessagingPreferenceActivity;
 
 /**
  * A class for annotating a CharSequence with spans to convert textual emoticons
@@ -34,7 +38,11 @@ import com.android.mms.R;
 public class SmileyParser {
     // Singleton stuff
     private static SmileyParser sInstance;
-    public static SmileyParser getInstance() { return sInstance; }
+
+    public static SmileyParser getInstance() {
+        return sInstance;
+    }
+
     public static void init(Context context) {
         sInstance = new SmileyParser(context);
     }
@@ -103,8 +111,9 @@ public class SmileyParser {
         }
     }
 
-    // NOTE: if you change anything about this array, you must make the corresponding change
-    // to the string arrays: default_smiley_texts and default_smiley_names in res/values/arrays.xml
+    // NOTE: if you change anything about this array, you must make the
+    // corresponding change to the string arrays: default_smiley_texts
+    // and default_smiley_names in res/values/cm_arrays.xml
     public static final int[] DEFAULT_SMILEY_RES_IDS = {
         Smileys.getSmileyResource(Smileys.HAPPY),                //  0
         Smileys.getSmileyResource(Smileys.SAD),                  //  1
@@ -143,8 +152,7 @@ public class SmileyParser {
             throw new IllegalStateException("Smiley resource ID/text mismatch");
         }
 
-        HashMap<String, Integer> smileyToRes =
-                            new HashMap<String, Integer>(mSmileyTexts.length);
+        HashMap<String, Integer> smileyToRes = new HashMap<String, Integer>(mSmileyTexts.length);
         for (int i = 0; i < mSmileyTexts.length; i++) {
             smileyToRes.put(mSmileyTexts[i], DEFAULT_SMILEY_RES_IDS[i]);
         }
@@ -153,7 +161,7 @@ public class SmileyParser {
     }
 
     /**
-     * Builds the regular expression we use to find smileys in {@link #addSmileySpans}.
+     * Builds the regular expression we use to find smileys in { @link #addSmileySpans }.
      */
     private Pattern buildPattern() {
         // Set the StringBuilder capacity with the assumption that the average
@@ -167,12 +175,17 @@ public class SmileyParser {
             patternString.append(Pattern.quote(s));
             patternString.append('|');
         }
+
         // Replace the extra '|' with a ')'
         patternString.replace(patternString.length() - 1, patternString.length(), ")");
 
         return Pattern.compile(patternString.toString());
     }
 
+    public static boolean areEmoticonsEnabled(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(MessagingPreferenceActivity.ENABLE_EMOTICONS, true);
+    }
 
     /**
      * Adds ImageSpans to a CharSequence that replace textual emoticons such
@@ -183,18 +196,20 @@ public class SmileyParser {
      *         recognized emoticons.
      */
     public CharSequence addSmileySpans(CharSequence text) {
+        if (!areEmoticonsEnabled(mContext)) {
+            // Return without substituting
+            return text;
+        }
+
         SpannableStringBuilder builder = new SpannableStringBuilder(text);
 
         Matcher matcher = mPattern.matcher(text);
         while (matcher.find()) {
             int resId = mSmileyToRes.get(matcher.group());
-            builder.setSpan(new ImageSpan(mContext, resId),
-                            matcher.start(), matcher.end(),
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.setSpan(new ImageSpan(mContext, resId), matcher.start(), matcher.end(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         return builder;
     }
 }
-
-

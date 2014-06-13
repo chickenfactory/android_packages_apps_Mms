@@ -17,7 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="pref_templates_gestures_sensitivity_entries">
-    <item>1 (terluas)</item>
+    <item>1 (ทั่วไป)</item>
     <item>2</item>
     <item>3</item>
     <item>4</item>
@@ -28,29 +28,29 @@
     <item>9</item>
     <item>10</item>
     <item>11</item>
-    <item>12 (ketat)</item>
+    <item>12 (เข้มงวดที่สุด)</item>
   </string-array>
   <string-array name="default_smiley_names">
-    <item>Senang</item>
-    <item>Sedih</item>
-    <item>Mengedipkan mata</item>
-    <item>Lidah yang menjulur keluar</item>
-    <item>Terkejut</item>
-    <item>Mencium</item>
-    <item>Berteriak</item>
-    <item>Keren</item>
-    <item>Mulut uang</item>
-    <item>Kaki di mulut</item>
-    <item>Malu</item>
-    <item>Malaikat</item>
-    <item>Ragu-ragu</item>
-    <item>Menangis</item>
-    <item>Bibir disegel</item>
-    <item>Tertawa</item>
-    <item>Bingung</item>
-    <item>Hati</item>
-    <item>Marah</item>
-    <item>Menyeringai</item>
-    <item>Wajah poker</item>
+    <item>ดีใจ</item>
+    <item>เศร้า</item>
+    <item>ขยิบตา</item>
+    <item>แลบลิ้น</item>
+    <item>ประหลาดใจ</item>
+    <item>จุมพิต</item>
+    <item>ตะโกน</item>
+    <item>น่าสนใจ</item>
+    <item>เงินปิดปาก</item>
+    <item>เท้าปิดปาก</item>
+    <item>อาย</item>
+    <item>เทพ</item>
+    <item>ไม่แน่ใจ</item>
+    <item>ร้องไห้</item>
+    <item>รูดซิปปาก</item>
+    <item>หัวเราะ</item>
+    <item>สับสน</item>
+    <item>หัวใจ</item>
+    <item>โกรธ</item>
+    <item>แสยะยิ้ม</item>
+    <item>หน้าโป๊กเกอร์</item>
   </string-array>
 </resources>

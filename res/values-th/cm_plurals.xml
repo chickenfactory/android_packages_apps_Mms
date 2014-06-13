@@ -17,9 +17,12 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <plurals name="template_confirm_delete_conversation">
-    <item quantity="other"><xliff:g id="number" example="15">%1$s</xliff:g> 個範本將會被刪除。</item>
+    <item quantity="other"><xliff:g id="number" example="15">%1$s</xliff:g>แม่แบบถูกลบ</item>
   </plurals>
   <plurals name="remaining_delay_time">
-    <item quantity="other">%1$d 秒後寄出，輕觸以取消。</item>
+    <item quantity="other">กำลังส่งใน %1$d วินาที, แตะเพื่อยกเลิก</item>
+  </plurals>
+  <plurals name="confirm_mark_unread_conversation">
+    <item quantity="other"><xliff:g id="number" example="15">%1$s</xliff:g> ข้อความจะถูกแสดงว่ายังไม่ได้อ่าน</item>
   </plurals>
 </resources>
